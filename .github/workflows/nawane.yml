@@ -34,16 +34,19 @@ jobs:
       with:
         python-version: ${{ env.PYTHON_VERSION }}
 
-    # Install flet package before building
     - name: Install Flet
       run: |
         python -m pip install --upgrade pip
-        pip install flet  # Install the flet package
+        pip install flet
 
-    # (Optional) Install other Python dependencies if necessary
-    # - name: Install Python Dependencies
-    #   run: |
-    #     pip install -r requirements.txt
+    - name: Install Dependencies
+      run: |
+        # Install ninja build
+        sudo apt-get install -y ninja-build
+        # Install GTK 3.0 development libraries
+        sudo apt-get install -y libgtk-3-dev
+        # Optional: Install Android Studio (if targeting Android)
+        # sudo apt-get install -y android-studio
 
     - name: Setup Flutter ${{ env.FLUTTER_VERSION }}
       uses: subosito/flutter-action@v2
@@ -54,7 +57,7 @@ jobs:
       run: |
         echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}, USER: ${GITHUB_REPOSITORY%/}, PROJECT_BASE_URL: ${GITHUB_REPOSITORY#/}"
         flutter config --no-analytics
-        flet build web --base-url "3MTT-learning" --route-url-strategy hash
+        flet build web --base-url "/repository-name" --route-url-strategy hash
 
     - name: Upload Artifact
       uses: actions/upload-pages-artifact@v3
