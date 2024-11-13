@@ -8,7 +8,7 @@ import base64
 app = Flask(__name__)
 
 # Load the dataset
-df = pd.read_csv("/kaggle/input/itskills/ictskills.csv")
+df = pd.read_csv("ictskills.csv")
 
 # Questions to ask the user
 questions = [
